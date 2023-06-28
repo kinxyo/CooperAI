@@ -6,6 +6,7 @@
 	const ai_bubble = ref([]);
 	const user_bubble = ref([]);
 	const input = ref("");
+	const session = ref(false);
 
 	/* MISC. FUNCTIONS */
 	
@@ -15,6 +16,7 @@
 
 	/* API FUNCTIONS */
 	async function sendQuery() {
+		session.value = true;
 		user_bubble.value.push(input.value);
 		const {data: response} = await useAsyncData("data", async () => {
 			return await $fetch("http://127.0.0.1:8000/eliza",{
@@ -30,8 +32,6 @@
 		ai_bubble.value.push(response.value);  
 	}
 
-	// const { data: response, error } = await useFetch("http://127.0.0.1:8000/"); //✅
-
 </script>
 
 <template>
@@ -45,13 +45,13 @@
 		<div class="main">
 
 			<section class="content">
-				<div class="ai-bubble">
-					<transitionGroup name="res" id="ai-msg" tag="ul">
+				<div v-show="session" class="chat-bubble">
+					<TransitionGroup name="res" id="ai-msg" tag="ul" class="ul">
 						<li v-for="i in ai_bubble" :key="i" class="chat">{{i}}</li>
-					</transitionGroup>
-					<transitionGroup name="res" id="user-msg" tag="ul">
+					</TransitionGroup>
+					<TransitionGroup name="res" id="user-msg" tag="ul" class="ul">
 						<li v-for="k in user_bubble" class="chat">{{k}}</li>
-					</transitionGroup>
+					</TransitionGroup>
 				</div>
 			</section>
 				
@@ -66,27 +66,21 @@
 </template>
 
 <style scoped>
-li {
-	border: 2px solid green;
-	margin-bottom: 20px;
-}
 main {
 	border: 10px solid peru;
 	border-radius: 15px;
 	height: 80vh;
 	padding: 5px;
-	width: 700px;
+	width: fit-content;
 	display: flex;
 	flex-direction: column;
 }
 .header {
-	/* border: 2px solid yellow; */
 	height: fit-content;
 	text-align: center;
 }
 .main {
 	margin-top: 20px;
-	/* border: 2px solid green; */
 	display: grid;
 	height: 100vh;
 	display: flex;
@@ -94,35 +88,45 @@ main {
 	flex-direction: column;
 	gap: 20px;
 }
-#user-msg {
-	margin-top: 45px;
-}
 .content {
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	flex-wrap: wrap;
 	height: 80%;
-	padding: 10px;
+	padding: 18px;
 	font-size: larger;
-	word-wrap: break-word;
-	/* border: 2px solid orange; */
+	word-wrap: none;
 }
-.ai-bubble {
-	/* border: 2px solid slateblue; */
+.chat-bubble {
+	background: linear-gradient(90deg, #fc1b94 0%, #173736 100%); 
+	padding: 10px;
+	border-radius: 10px;
+	backdrop-filter: opacity(0.5);
+}
+.ul {
 	display: flex;
-	justify-content: space-between;
-	/* flex-direction: row-reverse; */
+	justify-content: flex-end;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+}
+#user-msg {
+	align-items: flex-end;
+}
+#ai-msg {
+	justify-content: left;
+	align-items: self-start;
+	margin-right: 60px;
 }
 .chat {
 	list-style-type: none;
-	border: 2px solid yellow;
 	background-color: azure;
 	padding: 10px;
+	margin: 0;
 	border-radius: 15px;
 	width: fit-content;
 }
 .tools {
-	/* border: 2px solid yellow; */
 	text-align: center;
 }
 input {
