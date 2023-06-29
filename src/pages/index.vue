@@ -19,7 +19,7 @@
 	// const opacity = computed(() => Math.min(Math.max(size.value / 300, 0.7),1))
 
 	/* TAURI COMMANDS */
-	const somevar = await invoke("greet", { name: "kinjalk" });
+	// const somevar = await invoke("greet", { name: "kinjalk" });
 
 	/* API FUNCTIONS */
 	async function sendQuery() {
@@ -38,8 +38,13 @@
 				}),
 			});
 		});
-		convo.ai = response.value;
-		conversation.value.push(convo);
+		if (response.value) {
+			convo.ai = response.value;
+			conversation.value.push(convo);
+		} else {
+			convo.ai = "Sorry, there seems to some problem in the application.";
+			conversation.value.push(convo);
+		}
 	}
 </script>
 
@@ -57,7 +62,6 @@
 
 		<section class="header">
 			<h1 style="color: palevioletred; font-size: xx-large">CooperAI</h1>
-			<!-- <h3>{{conversation}}</h3> -->
 		</section>
 
 		<div class="main">
@@ -189,6 +193,10 @@
 	.linetaken-user {
 		display: flex;
 		justify-content: right;
+		border: 2px solid slateblue;
+	}
+	.linetaken-ai {
+		border: 2px solid slateblue;
 	}
 	p {
 		list-style-type: none;
