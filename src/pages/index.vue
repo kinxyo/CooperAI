@@ -38,7 +38,7 @@
 <template>
 	<main>
 		<section class="header">
-			<h1 style="color: palevioletred; font-size: xx-large;">Eliza</h1>
+			<h1 style="color: palevioletred; font-size: xx-large;">CooperAI</h1>
 			<!-- <h3>{{conversation}}</h3> -->
 			<hr>
 		</section>
@@ -68,6 +68,9 @@
 </template>
 
 <style scoped>
+h1 {
+	font-family:  Pathway Extreme;
+}
 main {
 	border: 10px solid peru;
 	border-radius: 15px;
@@ -87,6 +90,7 @@ main {
 	display: flex;
 	gap: 10px;
 	flex-direction: column;
+	flex-wrap: nowrap;
 }
 .content {
 	display: flex;
@@ -138,6 +142,7 @@ input {
 }
 input:focus {
 	outline: none;
+	font-family: Space Grotesk;
 }
 input:hover {
 	transform: scale(1.04);
