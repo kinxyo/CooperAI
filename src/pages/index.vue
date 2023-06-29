@@ -4,29 +4,31 @@
 	import { useMouse, useWindowSize } from "@vueuse/core";
 
 	/* DECLARATIONS */
-	const conversation = ref([]);
-	const input = ref("");
+	const log_user = ref([]);
+	const log_ai = ref([]);
+	const user_input = ref("");
+	const ai_response = ref("");
+
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
 
-	/* MISC. FUNCTIONS */
+	/* COMPUTED PROPERTIES */
 	const dx = computed(() => Math.abs(x.value - width.value / 2));
 	const dy = computed(() => Math.abs(y.value - height.value / 2));
 	const distance = computed(() =>
-		Math.sqrt(dx.value * dx.value + dy.value * dy.value)
+	Math.sqrt(dx.value * dx.value + dy.value * dy.value)
 	);
-	// const size = computed(() => Math.max(300 - distance.value, 50))
-	// const opacity = computed(() => Math.min(Math.max(size.value / 300, 0.7),1))
+	
+	/* MISC. FUNCTIONS */
+	function pushMessage() {
+		log_user.value.push(user_input.value);
+	}
 
 	/* TAURI COMMANDS */
 	// const somevar = await invoke("greet", { name: "kinjalk" });
 
 	/* API FUNCTIONS */
 	async function sendQuery() {
-		let convo = {
-			user: input.value,
-			ai: "",
-		};
 		const { data: response } = await useAsyncData("data", async () => {
 			return await $fetch("http://127.0.0.1:8000/eliza", {
 				method: "post",
@@ -39,11 +41,12 @@
 			});
 		});
 		if (response.value) {
-			convo.ai = response.value;
-			conversation.value.push(convo);
+			ai_response.value = response.value;
+			log_ai.value.push(ai_response.value);
 		} else {
-			convo.ai = "Sorry, there seems to some problem in the application.";
-			conversation.value.push(convo);
+			ai_response.value =
+				"Sorry, there seems to some problem in the application.";
+			log_ai.value.push(ai_response.value);
 		}
 	}
 </script>
@@ -61,19 +64,17 @@
 			class="mouse-event"></div>
 
 		<section class="header">
-			<h1 style="color: palevioletred; font-size: xx-large">CooperAI</h1>
+			<h1 class="yo" style="color: palevioletred; font-size: xx-large">CooperAI</h1>
 		</section>
 
 		<div class="main">
 			<section class="content">
-				<TransitionGroup name="res" tag="ul" class="ul">
-					<li v-for="i in conversation" :key="i">
-						<div class="linetaken-ai">
-							<p>{{ i.ai }}</p>
-						</div>
-						<div class="linetaken-user">
-							<p>{{ i.user }}</p>
-						</div>
+				<TransitionGroup name="usermsg" tag="ul">
+					<li id="userline" v-for="u in log_user" :key="u">
+						<p>{{ u }}</p>
+					</li>
+					<li id="ailine" v-for="a in log_ai" :key="a">
+						<p>{{ a }}</p>
 					</li>
 				</TransitionGroup>
 			</section>
@@ -82,23 +83,32 @@
 				<input
 					placeholder="Chat with Cooper..."
 					@keyup.enter="
+						pushMessage();
 						sendQuery();
-						input = '';
-					"
+						user_input = '';
+						"
 					type="text"
-					v-model="input" />
-				<button
+					v-model="user_input" />
+					<button
 					@click="
+						pushMessage();
 						sendQuery();
-						input = '';
+						user_input = '';
 					">
 					<Icon name="zondicons:send" color="black" />
 				</button>
 			</section>
 		</div>
 	</main>
-	<section style="display: flex; justify-content: center; font-family:  Poppins; align-items: center;" class="footer">
-		<h6> © CooperAI. All rights reserved </h6>		
+	<section
+		style="
+			display: flex;
+			justify-content: center;
+			font-family: Poppins;
+			align-items: center;
+		"
+		class="footer">
+		<h6>© CooperAI. All rights reserved</h6>
 	</section>
 </template>
 
@@ -110,9 +120,7 @@
 		opacity: 0.5;
 		width: 50px;
 		transform: translate(-50%, -50%);
-		/* background-color: palevioletred; */
 		filter: blur(20px);
-		/* background: linear-gradient(270deg, #eb146a 0%, #2ed193 100%);  */
 		pointer-events: none;
 		background: radial-gradient(circle at center, #eb146a 0%, #2ed193 100%);
 		background-size: 400% 400%;
@@ -136,7 +144,6 @@
 		font-family: Pathway Extreme;
 	}
 	main {
-		/* border: 10px solid peru; */
 		background-color: rgba(255, 255, 255, 0.2);
 		border-radius: 15px;
 		height: fit-content;
@@ -157,7 +164,6 @@
 	.main {
 		border-radius: 15px;
 		backdrop-filter: blur(40px);
-		/* margin-top: 20px; */
 		height: 70vh;
 		display: flex;
 		gap: 10px;
@@ -179,36 +185,32 @@
 	.content::-webkit-scrollbar {
 		display: none;
 	}
-	.ul {
+	ul {
 		margin: 0;
 		padding: 0;
+		/* display: flex; */
+		border: 2px solid orange;
+	}
+	#userline {
+		align-items: end;
 	}
 	li {
 		list-style-type: none;
+		text-align: none;
 		display: flex;
-		flex-direction: column-reverse;
-		flex-wrap: nowrap;
-		overflow: hidden;
+		flex-direction: column;
 	}
-	.linetaken-user {
-		display: flex;
-		justify-content: right;
-		border: 2px solid slateblue;
-	}
-	.linetaken-ai {
-		border: 2px solid slateblue;
+	.yo {
+		background-color: #eb146a;
 	}
 	p {
-		list-style-type: none;
-		background-color: rgb(228, 232, 232);
+		/* background-color: rgb(228, 232, 232); */
+		/* background-color: rgb(95, 168, 211); */
 		padding: 10px;
 		margin: 0;
 		border-radius: 15px;
 		width: fit-content;
 		font-size: medium;
-	}
-	.linetaken-user p {
-		background-color: rgb(95, 168, 211);
 	}
 	.tools {
 		display: flex;
@@ -256,12 +258,25 @@
 		filter: brightness(0.8);
 		cursor: none;
 	}
-	.res-enter-from {
+	.usermsg-enter-from {
 		opacity: 0;
 		transform: translateY(30px);
 	}
-	.res-enter-active {
+	.usermsg-enter-active {
 		transition: all 0.5s;
+	}
+	.usermsg-move-active {
+		transition: all 0.2s;
+	}
+	.aires-enter-from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	.aires-enter-active {
+		transition: all 0.5s;
+	}
+	.aires-move-active {
+		transition: all 0.2s;
 	}
 </style>
 
