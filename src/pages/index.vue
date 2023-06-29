@@ -3,10 +3,8 @@
     import { invoke } from "@tauri-apps/api";
 
 	/* DECLARATIONS */
-	const ai_bubble = ref([]);
-	const user_bubble = ref([]);
+	const conversation = ref([]);
 	const input = ref("");
-	const session = ref(false);
 
 	/* MISC. FUNCTIONS */
 	
@@ -16,8 +14,10 @@
 
 	/* API FUNCTIONS */
 	async function sendQuery() {
-		session.value = true;
-		user_bubble.value.push(input.value);
+		let convo = {
+			user: input.value,
+			ai: "",
+		};
 		const {data: response} = await useAsyncData("data", async () => {
 			return await $fetch("http://127.0.0.1:8000/eliza",{
 				method: "post",
@@ -29,7 +29,8 @@
 				}),
 			})
 		})
-		ai_bubble.value.push(response.value);  
+		convo.ai = response.value;
+		conversation.value.push(convo);
 	}
 
 </script>
@@ -38,21 +39,22 @@
 	<main>
 		<section class="header">
 			<h1 style="color: palevioletred; font-size: xx-large;">Eliza</h1>
-			<h3>{{greeting}}</h3>
+			<!-- <h3>{{conversation}}</h3> -->
 			<hr>
 		</section>
 
 		<div class="main">
-
 			<section class="content">
-				<div v-show="session" class="chat-bubble">
-					<TransitionGroup name="res" id="ai-msg" tag="ul" class="ul">
-						<li v-for="i in ai_bubble" :key="i" class="chat">{{i}}</li>
+					<TransitionGroup name="res" tag="ul" class="ul">
+						<li v-for="i in conversation" :key="i" class="chat">
+							<div class="linetaken-ai">
+							<p>{{i.ai}}</p>
+							</div>
+							<div class="linetaken-user">
+								<p>{{i.user}}</p>
+							</div>
+						</li>
 					</TransitionGroup>
-					<TransitionGroup name="res" id="user-msg" tag="ul" class="ul">
-						<li v-for="k in user_bubble" class="chat">{{k}}</li>
-					</TransitionGroup>
-				</div>
 			</section>
 				
 			<section class="tools">
@@ -69,9 +71,9 @@
 main {
 	border: 10px solid peru;
 	border-radius: 15px;
-	height: 80vh;
+	height: fit-content;
+	width: 80%;
 	padding: 5px;
-	width: fit-content;
 	display: flex;
 	flex-direction: column;
 }
@@ -81,44 +83,42 @@ main {
 }
 .main {
 	margin-top: 20px;
-	display: grid;
-	height: 100vh;
+	height: 70vh;
 	display: flex;
-	justify-content: space-between;
+	gap: 10px;
 	flex-direction: column;
-	gap: 20px;
 }
 .content {
 	display: flex;
 	flex-direction: column-reverse;
-	flex-wrap: wrap;
-	height: 80%;
+	flex-wrap: nowrap;
+	flex: 0;
+	max-width: 100%;
+	min-height: 80%;
+	max-height: 80%;
 	padding: 18px;
-	font-size: larger;
-	word-wrap: none;
+	font-size: large;
+	overflow: scroll;
 }
-.chat-bubble {
-	background: linear-gradient(90deg, #fc1b94 0%, #173736 100%); 
-	padding: 10px;
-	border-radius: 10px;
-	backdrop-filter: opacity(0.5);
+.content::-webkit-scrollbar {
+	display: none;
 }
 .ul {
-	display: flex;
-	justify-content: flex-end;
-	flex-direction: column;
 	margin: 0;
 	padding: 0;
 }
-#user-msg {
-	align-items: flex-end;
+li {
+	list-style-type: none;
+	display: flex;
+	flex-direction: column-reverse;
+	flex-wrap: nowrap;
+	overflow: hidden;
 }
-#ai-msg {
-	justify-content: left;
-	align-items: self-start;
-	margin-right: 60px;
+.linetaken-user {
+	display: flex;
+	justify-content: right;
 }
-.chat {
+p {
 	list-style-type: none;
 	background-color: azure;
 	padding: 10px;
@@ -169,9 +169,7 @@ button:hover {
 	body {
 		background-color: rgb(178, 190, 200);
 		color: #1f1d1d;
-		display: grid;
-		place-items: center;
-		padding: 20px;
+		padding: 10px;
 		font-family: Arial, Helvetica, sans-serif;
 	}
 </style>
