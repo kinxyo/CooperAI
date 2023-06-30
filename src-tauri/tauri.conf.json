@@ -4,17 +4,18 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:3000",
-    "distDir": "../.output/server/index.mjs"
+    "distDir": "../.output/public"
+    
   },
   "package": {
-    "productName": "cooper",
+    "productName": "CooperAI",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "http": {
-        "request": true,
-        "scope": ["https://api.openai.com/v1/engines/text-davinci-003/completions"]
+        "all": true,
+        "request": true
       }
     },
     "bundle": {
