@@ -19,7 +19,6 @@
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.0.1",
     "@tauri-apps/api": "^1.4.0",
-    "@vueuse/nuxt": "^10.2.1",
-    "openai": "^3.3.0"
+    "@vueuse/nuxt": "^10.2.1"
   }
 }

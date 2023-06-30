@@ -6,6 +6,7 @@
 	/* DECLARATIONS */
 	const conversation = ref([]);
 	const user_input = ref("");
+	const config = useRuntimeConfig();
 
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
@@ -19,9 +20,6 @@
 	
 	/* MISC. FUNCTIONS */
 
-	/* TAURI COMMANDS */
-	// const somevar = await invoke("greet", { name: "kinjalk" });
-
 	/* API FUNCTIONS */
 	async function sendQuery() {
 		if (!user_input.value) return;
@@ -29,24 +27,34 @@
 			user: user_input.value,
 			ai: "",
 		};
-		const { data: response } = await useAsyncData("data", async () => {
-			return await $fetch("http://127.0.0.1:8000/eliza", {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					user_input: input.value,
-				}),
-			});
-		});
-		if (response.value) {
-			convo.ai = response.value;
+		/* rust */
+		const response = await invoke("get_response", { input: user_input.value, token: config.public.token_id});
+		if (response) {
+			convo.ai = response;
 			conversation.value.push(convo);
 		} else {
 			convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
 			conversation.value.push(convo);
 		}
+		/* fastapi */
+		// const { data: response } = await useAsyncData("data", async () => {
+		// 	return await $fetch("http://127.0.0.1:8000/eliza", {
+		// 		method: "post",
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify({
+		// 			user_input: input.value,
+		// 		}),
+		// 	});
+		// });
+		// if (response.value) {
+		// 	convo.ai = response.value;
+		// 	conversation.value.push(convo);
+		// } else {
+		// 	convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
+		// 	conversation.value.push(convo);
+		// }
 	}
 </script>
 
@@ -60,7 +68,7 @@
 			class="mouse-event"></div>
 
 		<section class="header">
-			<h1 style="color: palevioletred; font-size: xx-large">CooperAI</h1>
+			<h1 style="font-size: xx-large">CooperAI</h1>
 		</section>
 
 		<div class="main">
@@ -135,6 +143,9 @@
 
 	h1 {
 		font-family: Pathway Extreme;
+		color: transparent;
+		background: linear-gradient(to right, #eb146a 0%, #2ed193 100%);
+		background-clip: text;
 	}
 	main {
 		background-color: rgba(255, 255, 255, 0.2);
@@ -194,16 +205,20 @@
 	#user {
 		background-color: rgb(95, 168, 211);
 		align-self: flex-end;
+		margin-bottom: 8px;
+		max-width: 400px;
+		word-break: break-all;
 	}
 	#ai {
+		margin-bottom: 8px;
 		background-color: rgb(228, 232, 232);
 		align-self: flex-start;
+		max-width: 400px;
 	}
 	p {
-		padding: 10px;
+		padding: 13px;
 		margin: 0;
 		border-radius: 15px;
-		width: fit-content;
 		font-size: medium;
 	}
 	.tools {

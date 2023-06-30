@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   ssr: false,
   srcDir: 'src',
   runtimeConfig: {
-    openAi: {
-      secretKey: "",
+    public: {
+      token_id: process.env.OAI_KEY,
     },
   },
   modules: ["@nuxtjs/google-fonts",'nuxt-icon'],
