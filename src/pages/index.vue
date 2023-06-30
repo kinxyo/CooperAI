@@ -72,6 +72,10 @@
 			class="mouse-event"></div>
 
 		<section class="header">
+			<div class="titlebar">
+				<Icon id="close" name="icon-park-solid:red-cross" color="slateblue" />
+				<!-- <span id="close">x</span> -->
+			</div>
 			<h1 style="font-size: xx-large">CooperAI</h1>
 		</section>
 
@@ -106,17 +110,18 @@
 				</button>
 			</section>
 		</div>
+		<section
+			style="
+				display: flex;
+				height: fit-content;
+				justify-content: center;
+				font-family: Poppins;
+				align-items: center;
+			"
+			class="footer">
+			<h6>© CooperAI. All rights reserved</h6>
+		</section>
 	</main>
-	<section
-		style="
-			display: flex;
-			justify-content: center;
-			font-family: Poppins;
-			align-items: center;
-		"
-		class="footer">
-		<h6>© CooperAI. All rights reserved</h6>
-	</section>
 </template>
 
 <style scoped>
@@ -139,6 +144,17 @@
 	justify-content: center;
 	align-items: center;
 }
+.titlebar {
+	display: flex;
+	justify-content: flex-start;
+}
+#close {
+	margin-left: 6px;
+	margin-top: 6px;
+	transform: rotate(45deg);
+	opacity: 1;
+}
+
 	.mouse-event {
 		position: absolute;
 		border-radius: 9999px;
@@ -148,7 +164,7 @@
 		transform: translate(-50%, -50%);
 		filter: blur(20px);
 		pointer-events: none;
-		background: radial-gradient(circle at center, #eb146a 0%, #2ed193 100%);
+		background: radial-gradient(circle at center, #eb146a 0%, #0fffa3 100%);
 		background-size: 400% 400%;
 		animation: pointerM 1s ease-out infinite;
 	}
@@ -172,13 +188,15 @@
 		background: linear-gradient(to right, #eb146a 0%, #2ed193 100%);
 		background-clip: text;
 		user-select: none;
+		/* width: fit-content; */
 	}
 	main {
-		background-color: rgba(255, 255, 255, 0.596);
+		background-color: rgba(255, 255, 255, 0.835);
 		/* background-color: rgba(255, 255, 255, 0.2); */
 		border-radius: 15px;
-		height: fit-content;
-		width: 99%;
+		/* height: fit-content; */
+		height: 100vh;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		box-shadow: 1px 10px 20px rgba(28, 27, 27, 0.288);
@@ -193,7 +211,7 @@
 		backdrop-filter: blur(40px);
 	}
 	.main {
-		border-radius: 15px;
+		/* border-radius: 15px; */
 		backdrop-filter: blur(40px);
 		height: 70vh;
 		display: flex;
@@ -308,9 +326,9 @@
 <style>
 	body {
 		margin: 0;
-		/* background-color: rgb(178, 190, 200); */
+		padding: 0;
 		background-color: transparent;
-		border-radius: 20px;		
+		/* background-color: rgb(178, 190, 200); */
 		/* background-color: rgb(24, 25, 26); */
 		/* background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg"); */
 		color: #1f1d1d;
