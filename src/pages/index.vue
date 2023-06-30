@@ -4,10 +4,8 @@
 	import { useMouse, useWindowSize } from "@vueuse/core";
 
 	/* DECLARATIONS */
-	const log_user = ref([]);
-	const log_ai = ref([]);
+	const conversation = ref([]);
 	const user_input = ref("");
-	const ai_response = ref("");
 
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
@@ -20,15 +18,17 @@
 	);
 	
 	/* MISC. FUNCTIONS */
-	function pushMessage() {
-		log_user.value.push(user_input.value);
-	}
 
 	/* TAURI COMMANDS */
 	// const somevar = await invoke("greet", { name: "kinjalk" });
 
 	/* API FUNCTIONS */
 	async function sendQuery() {
+		if (!user_input.value) return;
+		let convo = {
+			user: user_input.value,
+			ai: "",
+		};
 		const { data: response } = await useAsyncData("data", async () => {
 			return await $fetch("http://127.0.0.1:8000/eliza", {
 				method: "post",
@@ -41,12 +41,11 @@
 			});
 		});
 		if (response.value) {
-			ai_response.value = response.value;
-			log_ai.value.push(ai_response.value);
+			convo.ai = response.value;
+			conversation.value.push(convo);
 		} else {
-			ai_response.value =
-				"Sorry, there seems to some problem in the application.";
-			log_ai.value.push(ai_response.value);
+			convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
+			conversation.value.push(convo);
 		}
 	}
 </script>
@@ -55,26 +54,22 @@
 	<main>
 		<div
 			:style="{
-				// opacity: opacity,
 				left: `${x}px`,
 				top: `${y}px`,
-				// width: `${size}px`,
-				// height: `${size}px`,
 			}"
 			class="mouse-event"></div>
 
 		<section class="header">
-			<h1 class="yo" style="color: palevioletred; font-size: xx-large">CooperAI</h1>
+			<h1 style="color: palevioletred; font-size: xx-large">CooperAI</h1>
 		</section>
 
 		<div class="main">
 			<section class="content">
-				<TransitionGroup name="usermsg" tag="ul">
-					<li id="userline" v-for="u in log_user" :key="u">
-						<p>{{ u }}</p>
-					</li>
-					<li id="ailine" v-for="a in log_ai" :key="a">
-						<p>{{ a }}</p>
+				<TransitionGroup name="texts" tag="ul">
+					<li v-for="i in conversation" :key="i">
+						<p id="user">{{ i.user }}</p>
+						<p v-if="i.ai" id="ai">{{ i.ai }}</p>
+						<p v-else>...</p>
 					</li>
 				</TransitionGroup>
 			</section>
@@ -83,7 +78,6 @@
 				<input
 					placeholder="Chat with Cooper..."
 					@keyup.enter="
-						pushMessage();
 						sendQuery();
 						user_input = '';
 						"
@@ -91,7 +85,6 @@
 					v-model="user_input" />
 					<button
 					@click="
-						pushMessage();
 						sendQuery();
 						user_input = '';
 					">
@@ -188,11 +181,6 @@
 	ul {
 		margin: 0;
 		padding: 0;
-		/* display: flex; */
-		border: 2px solid orange;
-	}
-	#userline {
-		align-items: end;
 	}
 	li {
 		list-style-type: none;
@@ -203,9 +191,15 @@
 	.yo {
 		background-color: #eb146a;
 	}
+	#user {
+		background-color: rgb(95, 168, 211);
+		align-self: flex-end;
+	}
+	#ai {
+		background-color: rgb(228, 232, 232);
+		align-self: flex-start;
+	}
 	p {
-		/* background-color: rgb(228, 232, 232); */
-		/* background-color: rgb(95, 168, 211); */
 		padding: 10px;
 		margin: 0;
 		border-radius: 15px;
@@ -258,24 +252,14 @@
 		filter: brightness(0.8);
 		cursor: none;
 	}
-	.usermsg-enter-from {
+	.texts-enter-from {
 		opacity: 0;
 		transform: translateY(30px);
 	}
-	.usermsg-enter-active {
+	.texts-enter-active {
 		transition: all 0.5s;
 	}
-	.usermsg-move-active {
-		transition: all 0.2s;
-	}
-	.aires-enter-from {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	.aires-enter-active {
-		transition: all 0.5s;
-	}
-	.aires-move-active {
+	.texts-move {
 		transition: all 0.2s;
 	}
 </style>
