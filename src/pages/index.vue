@@ -282,10 +282,9 @@
 <style>
 	body {
 		padding: 5px;
-		/* margin: 0; */
-		background-color: rgb(178, 190, 200);
+		/* background-color: rgb(178, 190, 200); */
 		/* background-color: rgb(24, 25, 26); */
-		/* background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg"); */
+		background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg");
 		color: #1f1d1d;
 		font-family: Arial, Helvetica, sans-serif;
 		overflow: hidden;

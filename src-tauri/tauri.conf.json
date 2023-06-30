@@ -4,7 +4,7 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:3000",
-    "distDir": "../dist"
+    "distDir": "../.output/server/index.mjs"
   },
   "package": {
     "productName": "cooper",
@@ -13,8 +13,8 @@
   "tauri": {
     "allowlist": {
       "http": {
-        "all": false,
-        "request": false
+        "request": true,
+        "scope": ["https://api.openai.com/v1/engines/text-davinci-003/completions"]
       }
     },
     "bundle": {
@@ -26,13 +26,13 @@
       },
       "externalBin": [],
       "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
+        "icons/CooperAI32.png",
+        "icons/CooperAI128.png",
+        "icons/CooperAI256.png",
         "icons/icon.icns",
-        "icons/icon.ico"
+        "icons/CooperAI.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.cooperai.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -42,7 +42,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "Virtual AI Assistant for mental therapy",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -60,7 +60,7 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
+        "resizable": false,
         "title": "CooperAI",
         "width": 800
       }
