@@ -63,7 +63,9 @@
         "height": 600,
         "resizable": false,
         "title": "CooperAI",
-        "width": 800
+        "width": 800,
+        "transparent": true,
+        "decorations": false
       }
     ]
   }

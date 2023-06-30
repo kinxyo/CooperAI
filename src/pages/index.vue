@@ -7,7 +7,7 @@
 	const conversation = ref([]);
 	const user_input = ref("");
 	const config = useRuntimeConfig();
-
+	const waiting = ref(false);
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
 
@@ -28,33 +28,37 @@
 			ai: "",
 		};
 		/* rust */
-		const response = await invoke("get_response", { input: user_input.value, token: config.public.token_id});
-		if (response) {
-			convo.ai = response;
-			conversation.value.push(convo);
-		} else {
-			convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
-			conversation.value.push(convo);
-		}
-		/* fastapi */
-		// const { data: response } = await useAsyncData("data", async () => {
-		// 	return await $fetch("http://127.0.0.1:8000/eliza", {
-		// 		method: "post",
-		// 		headers: {
-		// 			"Content-Type": "application/json",
-		// 		},
-		// 		body: JSON.stringify({
-		// 			user_input: input.value,
-		// 		}),
-		// 	});
-		// });
-		// if (response.value) {
-		// 	convo.ai = response.value;
+		// const response = await invoke("get_response", { input: user_input.value, token: config.public.token_id});
+		// if (response) {
+		// 	convo.ai = response;
+		// 	waiting.value = false;
 		// 	conversation.value.push(convo);
 		// } else {
 		// 	convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
+		// 	waiting.value = false;
 		// 	conversation.value.push(convo);
 		// }
+		/* fastapi */
+		const { data: response } = await useAsyncData("data", async () => {
+			return await $fetch("http://127.0.0.1:8000/eliza", {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					user_input: input.value,
+				}),
+			});
+		});
+		if (response.value) {
+			convo.ai = response.value;
+			conversation.value.push(convo);
+			waiting.value = false;
+		} else {
+			convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
+			conversation.value.push(convo);
+			waiting.value = false;
+		}
 	}
 </script>
 
@@ -76,8 +80,8 @@
 				<TransitionGroup name="texts" tag="ul">
 					<li v-for="i in conversation" :key="i">
 						<p id="user">{{ i.user }}</p>
-						<p v-if="i.ai" id="ai">{{ i.ai }}</p>
-						<p v-else>...</p>
+						<p id="ai">{{ i.ai }}</p>
+						<p id="loading" v-if="waiting"> <div class="spinner"></div> </p>
 					</li>
 				</TransitionGroup>
 			</section>
@@ -86,6 +90,7 @@
 				<input
 					placeholder="Chat with Cooper..."
 					@keyup.enter="
+						waiting = true;
 						sendQuery();
 						user_input = '';
 						"
@@ -93,6 +98,7 @@
 					v-model="user_input" />
 					<button
 					@click="
+						waiting = true;
 						sendQuery();
 						user_input = '';
 					">
@@ -114,6 +120,25 @@
 </template>
 
 <style scoped>
+.spinner {
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	margin: 30px;
+	background-color: transparent;
+	border-bottom: 3px solid palevioletred;
+	animation: spin 1s linear infinite;
+}
+@keyframes spin {
+	from {transform: rotate(0turn)}
+	to {transform: rotate(1turn)}
+}
+#loading {
+	display: flex;
+	height: fit-content;
+	justify-content: center;
+	align-items: center;
+}
 	.mouse-event {
 		position: absolute;
 		border-radius: 9999px;
@@ -149,7 +174,8 @@
 		user-select: none;
 	}
 	main {
-		background-color: rgba(255, 255, 255, 0.2);
+		background-color: rgba(255, 255, 255, 0.596);
+		/* background-color: rgba(255, 255, 255, 0.2); */
 		border-radius: 15px;
 		height: fit-content;
 		width: 99%;
@@ -225,7 +251,6 @@
 	.tools {
 		display: flex;
 		justify-content: center;
-		/* border: 2px solid slateblue; */
 	}
 	input {
 		padding: 10px;
@@ -282,8 +307,10 @@
 
 <style>
 	body {
-		padding: 5px;
-		background-color: rgb(178, 190, 200);
+		margin: 0;
+		/* background-color: rgb(178, 190, 200); */
+		background-color: transparent;
+		border-radius: 20px;		
 		/* background-color: rgb(24, 25, 26); */
 		/* background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg"); */
 		color: #1f1d1d;

@@ -40,6 +40,7 @@ fn main() {
     .invoke_handler(tauri::generate_handler![get_response])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
+
 }
 
 #[tokio::main]
@@ -51,10 +52,7 @@ async fn completion(input: &str, token: &str) -> Result<std::string::String, std
   let preamble = "You're a mental health professional and you're talking to a patient who needs a therapy. You want to help them feel better.";
 
   /* auth token */
-  // let oai_token: String =
-  //     env::var("OAI_TOKEN").expect("OAI_TOKEN not found in environment variables");
   let oai_token: String = token.to_string();
-
   
   /* build auth header */
   let auth_header_val = format!("Bearer {}", oai_token);      
