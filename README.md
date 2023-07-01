@@ -2,7 +2,11 @@
 
 # CooperAi
 
-The App is still currently in the base version. For now, the app only has a chat window with a decent UI.
+A Virtual AI Therapist that is supposed to be something to which you can vent your feeling out to get a feedback that helps you form a more positive outlook on life.
+
+![image](https://github.com/kinxyo/CooperAI/assets/90744941/29f52ed9-8e73-4c7a-a8f5-4aca5807825f)
+
+[Download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit). Support both light & dark mode.
 
 Future Scope
 ============
@@ -12,4 +16,4 @@ Future Scope
 - Add my doggo's photo somewhere
 
 ---
-[Download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit).
+P.S- This application was created as part of a college project. The original intent was to create my own AI but due to time constraints; I had to resort to using the obvious gpt-3 api. Hopefully, in future, I integrate my own AI; however the application has a very clean UI with a very unique touch to it. I enjoyed creating the frontend with Nuxt and I nearly killed myself while writing the backend in Rust (just realized they rhyme) as I had no prior experience of Rust programming language. After enduring it however, I do have a lot of admiration for Rust.
