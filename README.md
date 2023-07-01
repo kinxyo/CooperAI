@@ -7,7 +7,6 @@ The App is still currently in the base version. For now, the app only has a chat
 Future Scope
 ============
 
-- Add Dark Mode
 - Preserve context
 - Add account sync option
 - Add more themes
