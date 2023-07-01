@@ -7,10 +7,9 @@ The App is still currently in the base version. For now, the app only has a chat
 Future Scope
 ============
 
-- Preserve context
 - Add account sync option
 - Add more themes
 - Add my doggo's photo somewhere
 
 ---
-PS- the app can be tested [here](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit && tokens have been disabled).
+[Download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit).

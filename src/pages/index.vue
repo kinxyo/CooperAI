@@ -12,6 +12,8 @@
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
 	const night = ref(true);
+	const limit = ref(0);
+	const stop = ref(false);
 
 	/* COMPUTED PROPERTIES */
 	const dx = computed(() => Math.abs(x.value - width.value / 2));
@@ -25,8 +27,10 @@
 	/* API FUNCTIONS */
 	async function sendQuery() {
 		if (!user_input.value) return;
-
-		conversation.value.push({
+	
+		limit.value += 1;
+		if (limit.value <= 3) {
+			conversation.value.push({
 			role: "system",
 			content: "You're a mental health therapist"
 		})
@@ -72,6 +76,11 @@
 		// 	conversation.value.push(convo);
 		// 	waiting.value = false;
 		// }
+		}
+		else {
+			waiting.value = false;
+			stop.value = true;
+		}
 	}
 </script>
 
@@ -108,6 +117,7 @@
 						}" id="ai">{{ i.content }}</p>
 					</li>
 					<p id="loading" v-if="waiting"> <div class="spinner"></div> </p>
+					<p id="loading" v-if="stop"> the developer of this app is not rich so he can't afford to pay for the api anymore. sorry for the inconvenience.</p>
 				</TransitionGroup>
 			</section>
 
@@ -163,7 +173,8 @@
 	display: flex;
 	height: fit-content;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
+	margin-left: 15px;
 }
 .titlebar {
 	display: flex;
