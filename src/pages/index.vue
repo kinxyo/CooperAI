@@ -25,49 +25,59 @@
 	/* API FUNCTIONS */
 	async function sendQuery() {
 		if (!user_input.value) return;
-		let convo = {
-			user: user_input.value,
-			ai: "",
-		};
+
+		conversation.value.push({
+			role: "system",
+			content: "You're a mental health therapist"
+		})
+
+		conversation.value.push({
+			role: "user",
+			content: user_input.value
+		})
+
 		/* rust */
-		// const response = await invoke("get_response", { input: user_input.value, token: config.public.token_id});
-		// if (response) {
-		// 	convo.ai = response;
-		// 	waiting.value = false;
+		const response = await invoke("get_response", { chats: conversation.value, token: config.public.token_id});
+		if (response) {
+			waiting.value = false;
+			conversation.value.push({
+				role: "assistant",
+				content: response
+			})
+		} else {
+			waiting.value = false;
+			conversation.value.push({
+				role: "assistant",
+				content: "Sorry, there seems to be an issue with the server. Please try again later."
+			})
+		}
+		/* fastapi */
+		// const { data: response } = await useAsyncData("data", async () => {
+		// 	return await $fetch("http://127.0.0.1:8000/eliza", {
+		// 		method: "post",
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify({
+		// 			user_input: input.value,
+		// 		}),
+		// 	});
+		// });
+		// if (response.value) {
+		// 	convo.ai = response.value;
 		// 	conversation.value.push(convo);
+		// 	waiting.value = false;
 		// } else {
 		// 	convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
-		// 	waiting.value = false;
 		// 	conversation.value.push(convo);
+		// 	waiting.value = false;
 		// }
-		/* fastapi */
-		const { data: response } = await useAsyncData("data", async () => {
-			return await $fetch("http://127.0.0.1:8000/eliza", {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					user_input: input.value,
-				}),
-			});
-		});
-		if (response.value) {
-			convo.ai = response.value;
-			conversation.value.push(convo);
-			waiting.value = false;
-		} else {
-			convo.ai = "Sorry, there seems to be an issue with the server. Please try again later.";
-			conversation.value.push(convo);
-			waiting.value = false;
-		}
 	}
 </script>
 
 <template>
 	<main :style="night === true && {
 		backgroundColor: 'rgba(33, 29, 29, 0.985)',
-		// border: '1px solid black',
 	}" >
 		<div
 			:style="{
@@ -82,23 +92,22 @@
 				<Icon style="cursor: pointer;" @click="night = !night" id="theme" name="icon-park-solid:dark-mode" color="black" />
 			</div>
 			<h1 style="font-size: xx-large">CooperAI</h1>
-			<!-- <h3>{{ night	 }}</h3> -->
 		</section>
 
 		<div class="main">
 			<section class="content">
 				<TransitionGroup name="texts" tag="ul">
 					<li v-for="i in conversation" :key="i">
-						<p :style="night === true && {
+						<p v-if="i.role==='user'" :style="night === true && {
 							backgroundColor: 'rgb(9, 80, 138)',
 							color: 'rgb(171, 171, 171)',
-						}" id="user">{{ i.user }}</p>
-						<p :style="night === true && {
+						}" id="user">{{ i.content }}</p>
+						<p v-if="i.role==='assistant'" :style="night === true && {
 							backgroundColor: 'rgb(171, 171, 171)',
 							color: 'rgba(33, 29, 29, 0.985)',
-						}" id="ai">{{ i.ai }}</p>
-						<p id="loading" v-if="waiting"> <div class="spinner"></div> </p>
+						}" id="ai">{{ i.content }}</p>
 					</li>
+					<p id="loading" v-if="waiting"> <div class="spinner"></div> </p>
 				</TransitionGroup>
 			</section>
 
@@ -159,7 +168,6 @@
 .titlebar {
 	display: flex;
 	justify-content: space-between;
-	/* border-bottom:1px solid #2ed193; */
 }
 #close {
 	margin-left: 6px;
@@ -215,14 +223,12 @@
 	main {
 		background-color: rgba(255, 255, 255, 0.835);
 		border-radius: 15px;
-		/* height: fit-content; */
 		height: 100vh;
 		cursor: none;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		box-shadow: 1px 10px 20px rgba(28, 27, 27, 0.288);
-		/* border: 1px solid rgba(240, 255, 255, 0.857); */
 	}
 	.header {
 		height: fit-content;
@@ -233,7 +239,6 @@
 		backdrop-filter: blur(40px);
 	}
 	.main {
-		/* border-radius: 15px; */
 		backdrop-filter: blur(40px);
 		height: 70vh;
 		display: flex;
