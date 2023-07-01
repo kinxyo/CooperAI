@@ -16,6 +16,10 @@
       "http": {
         "all": true,
         "request": true
+      },
+      "window": {
+        "all": false,
+        "close": true
       }
     },
     "bundle": {

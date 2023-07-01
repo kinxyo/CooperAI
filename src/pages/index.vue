@@ -2,6 +2,7 @@
 	/* IMPORTS */
 	import { invoke } from "@tauri-apps/api";
 	import { useMouse, useWindowSize } from "@vueuse/core";
+	import { appWindow } from "@tauri-apps/api/window";
 
 	/* DECLARATIONS */
 	const conversation = ref([]);
@@ -10,6 +11,7 @@
 	const waiting = ref(false);
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
+	const night = ref(true);
 
 	/* COMPUTED PROPERTIES */
 	const dx = computed(() => Math.abs(x.value - width.value / 2));
@@ -63,7 +65,10 @@
 </script>
 
 <template>
-	<main>
+	<main :style="night === true && {
+		backgroundColor: 'rgba(33, 29, 29, 0.985)',
+		// border: '1px solid black',
+	}" >
 		<div
 			:style="{
 				left: `${x}px`,
@@ -73,18 +78,25 @@
 
 		<section class="header">
 			<div class="titlebar">
-				<Icon id="close" name="icon-park-solid:red-cross" color="slateblue" />
-				<!-- <span id="close">x</span> -->
+				<Icon style="cursor: pointer;" @click="appWindow.close()" id="close" name="icon-park-solid:red-cross" :color="night ? 'rgba(208, 20, 67, 0.89)' : 'slateblue'" />
+				<Icon style="cursor: pointer;" @click="night = !night" id="theme" name="icon-park-solid:dark-mode" color="black" />
 			</div>
 			<h1 style="font-size: xx-large">CooperAI</h1>
+			<!-- <h3>{{ night	 }}</h3> -->
 		</section>
 
 		<div class="main">
 			<section class="content">
 				<TransitionGroup name="texts" tag="ul">
 					<li v-for="i in conversation" :key="i">
-						<p id="user">{{ i.user }}</p>
-						<p id="ai">{{ i.ai }}</p>
+						<p :style="night === true && {
+							backgroundColor: 'rgb(9, 80, 138)',
+							color: 'rgb(171, 171, 171)',
+						}" id="user">{{ i.user }}</p>
+						<p :style="night === true && {
+							backgroundColor: 'rgb(171, 171, 171)',
+							color: 'rgba(33, 29, 29, 0.985)',
+						}" id="ai">{{ i.ai }}</p>
 						<p id="loading" v-if="waiting"> <div class="spinner"></div> </p>
 					</li>
 				</TransitionGroup>
@@ -119,7 +131,7 @@
 				align-items: center;
 			"
 			class="footer">
-			<h6>© CooperAI. All rights reserved</h6>
+			<h6 :style="night === true && 'color: rgb(171, 171, 171)'">© CooperAI. All rights reserved</h6>
 		</section>
 	</main>
 </template>
@@ -146,13 +158,23 @@
 }
 .titlebar {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
+	/* border-bottom:1px solid #2ed193; */
 }
 #close {
 	margin-left: 6px;
 	margin-top: 6px;
 	transform: rotate(45deg);
-	opacity: 1;
+}
+#close:hover {
+	filter: brightness(0.5);
+}
+#theme {
+	margin-top: 8px;
+	margin-right: 15px;
+	align-self: flex-end;
+	justify-content: end;
+	transform: scale(1.1);
 }
 
 	.mouse-event {
@@ -192,21 +214,21 @@
 	}
 	main {
 		background-color: rgba(255, 255, 255, 0.835);
-		/* background-color: rgba(255, 255, 255, 0.2); */
 		border-radius: 15px;
 		/* height: fit-content; */
 		height: 100vh;
+		cursor: none;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		box-shadow: 1px 10px 20px rgba(28, 27, 27, 0.288);
-		border: 1px solid rgba(240, 255, 255, 0.857);
+		/* border: 1px solid rgba(240, 255, 255, 0.857); */
 	}
 	.header {
 		height: fit-content;
 		text-align: center;
-		border-top-left-radius: 20px;
-		border-top-right-radius: 20px;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
 		background-color: rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(40px);
 	}
@@ -277,6 +299,7 @@
 		background-color: rgba(255, 255, 255, 0.2);
 		border-radius: 5px;
 		transition: all 0.5s;
+		cursor: none;
 	}
 	input:focus {
 		outline: none;
@@ -334,8 +357,5 @@
 		color: #1f1d1d;
 		font-family: Arial, Helvetica, sans-serif;
 		overflow: hidden;
-	}
-	* {
-		cursor: none;
 	}
 </style>
