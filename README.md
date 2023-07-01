@@ -13,4 +13,4 @@ Future Scope
 - Add my doggo's photo somewhere
 
 ---
-PS- the app can be tested [here](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit).
+PS- the app can be tested [here](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (64-bit && tokens have been disabled).
