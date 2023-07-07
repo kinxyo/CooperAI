@@ -117,7 +117,6 @@ async fn completion(
 
 #[tauri::command]
 fn get_response(chats: Vec<Convo>, token: &str) -> String {
-    /* extracting chats to sendable prompts */
     let response = completion(token, chats);
     response.unwrap()
 }
