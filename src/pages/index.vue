@@ -21,15 +21,13 @@
 	const distance = computed(() =>
 	Math.sqrt(dx.value * dx.value + dy.value * dy.value)
 	);
-	
-	/* MISC. FUNCTIONS */
 
-	/* API FUNCTIONS */
+	/* API FUNCTION */
 	async function sendQuery() {
 		if (!user_input.value) return;
 	
 		limit.value += 1;
-		if (limit.value <= 3) {
+		if (limit.value <= 12) {
 			conversation.value.push({
 			role: "system",
 			content: "You're a mental health therapist"
@@ -55,7 +53,7 @@
 				content: "Sorry, there seems to be an issue with the server. Please try again later."
 			})
 		}
-		/* fastapi */
+		/* fastapi (for testing) */
 		// const { data: response } = await useAsyncData("data", async () => {
 		// 	return await $fetch("http://127.0.0.1:8000/eliza", {
 		// 		method: "post",
@@ -229,7 +227,6 @@
 		background: linear-gradient(to right, #eb146a 0%, #2ed193 100%);
 		background-clip: text;
 		user-select: none;
-		/* width: fit-content; */
 	}
 	main {
 		background-color: rgba(255, 255, 255, 0.835);
@@ -367,9 +364,6 @@
 		margin: 0;
 		padding: 0;
 		background-color: transparent;
-		/* background-color: rgb(178, 190, 200); */
-		/* background-color: rgb(24, 25, 26); */
-		/* background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg"); */
 		color: #1f1d1d;
 		font-family: Arial, Helvetica, sans-serif;
 		overflow: hidden;
