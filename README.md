@@ -2,12 +2,14 @@
 
 # CooperAi
 
-Therapy is a way most people can take their emotional load-off and reflect on life more profoundly. Many individuals may not have access to traditional therapy due to various barriers, such as lack of mental health services in their area or transportation issues.  Some people may feel more comfortable seeking support from an AI therapist instead of face-to-face therapy.  Traditional therapy can be expensive, and not everyone can afford regular it.
+Therapy is a way most people can take their emotional load-off and reflect on life more profoundly. Many individuals may not have access to traditional therapy due to various barriers, such as lack of mental health services in their area or transportation issues. Some people may feel more comfortable seeking support from an AI therapist instead of face-to-face therapy. Traditional therapy can be expensive, and not everyone can afford it regularly.
+
 A Virtual AI Therapist seeks to eliminate these challenges. However it is important to note that **Virtual AI Therapist should not replace human therapists entirely**. They can complement traditional therapy but may not be able to replicate the same level of human connection, empathy, and intuition that a human therapist can provide.
 
 ![image](https://github.com/kinxyo/CooperAI/assets/90744941/29f52ed9-8e73-4c7a-a8f5-4aca5807825f)
 
 [Download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (Windows 64-bit).
+
 For mac, clone the repo and run:
 `yarn tauri build`
 
