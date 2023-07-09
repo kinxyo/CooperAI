@@ -7,10 +7,8 @@ export default defineNuxtConfig({
       token_id: process.env.OAI_KEY,
     },
   },
-  generate: {
-    routes: [
-      '/',
-    ]
+  routeRules: {
+    '/': { prerender: true }
   },
   modules: ["@nuxtjs/google-fonts",'nuxt-icon'],
   googleFonts: {
