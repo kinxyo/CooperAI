@@ -8,13 +8,6 @@ A Virtual AI Therapist is intended to fill the gap left by tradition therapy. Ho
 
 ![image](https://github.com/kinxyo/CooperAI/assets/90744941/29f52ed9-8e73-4c7a-a8f5-4aca5807825f)
 
-[Download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drive_link) (Windows 64-bit).
-
-For mac, clone the repo and run:
-`yarn tauri build`
-
-> Note: Currently, 1 session has been limited to 12 messages only.
-
 Future Scope
 ============
 
