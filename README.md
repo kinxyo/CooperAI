@@ -2,11 +2,11 @@
 
 # CooperAi
 
-Therapy being the much needed thing in our society, not everyone has healthy access to it. Most people still live in distance from it because:
-- Absence of mental health services in their locality or transportation issues.
-- Others may wanna seek a more anyonymous exchange rather than an in-person meet.
-- Traditional therapy can be costly therefore not everyone can afford it customarily.
-- Feeling that your problems are trivial and not worth seeking therapy for.
+Therapy being the much needed thing in our society, still isn't reaching everyone that needs it. Common reasons being:
+- Lack of mental health services in ones locality.
+- Preference of wanting to seek a more anyonymous exchange rather than an in-person meet.
+- Feeling that one's problems are trivial and not worth seeking therapy for.
+- Traditional therapy can be costly therefore it's not sustainable to seek it customarily.
 
 THIS application is intended to fill the gap left by tradition therapy. However, it is imperative to note that **any Virtual AI Therapist should not replace human therapists entirely**. It only serves to complement the traditional therapy. It cannot replicate the same level of human connection, empathy, and intuition that a human therapist can provide (at least not as of now).
 
@@ -24,4 +24,4 @@ Future Scope
 - [ ] Add my doggo's photo somewhere
 
 ---
-P.S- This application was created as part of a college project. The original intent was to create my own AI but due to time constraints; I had to resort to using the obvious option: gpt-3 api. Hopefully, in future, I integrate my own AI. The application has a clean UI with a little touch of uniqueness to its pointer/mouse element. I enjoyed creating the frontend with Nuxt and I nearly killed myself while writing the backend in Rust as I had no prior experience.After enduring it however, I do have a lot of admiration for Rust.
+P.S- This application was created as part of a college project. The original intent was to create my own AI but due to time constraints; I had to resort to using the obvious option: gpt-3 api. Hopefully, in future, I integrate my own AI. I enjoyed creating the frontend with Nuxt and I nearly killed myself while writing the backend in Rust as I had no prior experience. After enduring it however, I do have a lot of admiration for Rust.
