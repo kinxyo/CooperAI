@@ -4,7 +4,7 @@
 
 Therapy being the much needed thing in our society, still isn't reaching everyone that needs it. Common reasons being:
 - Lack of mental health services in ones locality.
-- Preference of wanting to seek a more anyonymous exchange rather than an in-person meet.
+- Preference of wanting to seek a more anonymous exchange rather than an in-person meet.
 - Feeling that one's problems are trivial and not worth seeking therapy for.
 - Traditional therapy can be costly therefore it's not sustainable to seek it customarily.
 
@@ -25,3 +25,5 @@ Future Scope
 
 ---
 P.S- This application was created as part of a college project. The original intent was to create my own AI but due to time constraints; I had to resort to using the obvious option: gpt-3 api. Hopefully, in future, I integrate my own AI. I enjoyed creating the frontend with Nuxt and I nearly killed myself while writing the backend in Rust as I had no prior experience. After enduring it however, I do have a lot of admiration for Rust.
+
+[temporary download link](https://drive.google.com/file/d/1bQvQr4LJgMQss1d3HIMUQDc3l5eMmMQS/view?usp=drivesdk)
