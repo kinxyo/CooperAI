@@ -42,7 +42,12 @@ async fn completion(
         .expect("poor request or network error");
 
     /* now we're gonna use our hyper client to send the request to the endpoint and wait for a response */
-    let res = backend.client.request(req).await.expect("failed to send request");
+    let res: hyper::Response<Body>;
+    let res_err = backend.client.request(req).await;
+    match res_err {
+        Ok(v) => res = v,
+        Err(_) => return Err(String::from("Please check your internet connection, CooperAI requires it.")),
+    }
     let body = hyper::body::aggregate(res)
         .await
         .expect("failed to read response body");
@@ -58,5 +63,8 @@ async fn completion(
 fn get_response(chats: Vec<Convo>, state: State<'_, SharedStream>) -> String {
     let backend = state.0.lock().unwrap();
     let response = completion(backend.clone(), chats);
-    response.expect("Error parsing response!")
+    match response {
+        Ok(v) => return v,
+        Err(e) => return e,
+    }
 }

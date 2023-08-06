@@ -1,5 +1,4 @@
-<!-- I don't have time & energy to organize this -->
-<!-- Why did it I write like this in first place? Please don't ask. -->
+<!-- I wish I had the time & energy to organize this -->
 
 <script setup>
 	/* IMPORTS */
