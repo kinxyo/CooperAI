@@ -1,3 +1,6 @@
+<!-- I don't have time & energy to organize this -->
+<!-- Why did it I write like this in first place? Please don't ask. -->
+
 <script setup>
 	/* IMPORTS */
 	import { invoke } from "@tauri-apps/api";
@@ -7,7 +10,6 @@
 	/* DECLARATIONS */
 	const conversation = ref([]);
 	const user_input = ref("");
-	const config = useRuntimeConfig();
 	const waiting = ref(false);
 	const { x, y } = useMouse();
 	const { width, height } = useWindowSize();
@@ -41,7 +43,6 @@
 			/* rust */
 			const response = await invoke("get_response", {
 				chats: conversation.value,
-				token: config.public.token_id,
 			});
 			if (response) {
 				waiting.value = false;
