@@ -23,7 +23,7 @@ fn main() {
 
 #[tokio::main]
 async fn completion(
-    backend: Server,
+    backend: &Server,
     chat_history: Vec<Convo>,
 ) -> Result<std::string::String, std::string::String> {
 
@@ -35,7 +35,7 @@ async fn completion(
 
     /* building request */
     let body = Body::from(serde_json::to_vec(&oi_request).expect("failed to serialize request"));
-    let req = Request::post(backend.uri)
+    let req = Request::post(&backend.uri)
         .header(header::CONTENT_TYPE, "application/json")
         .header("Authorization", &backend.header)
         .body(body)
@@ -62,7 +62,7 @@ async fn completion(
 #[tauri::command]
 fn get_response(chats: Vec<Convo>, state: State<'_, SharedStream>) -> String {
     let backend = state.0.lock().unwrap();
-    let response = completion(backend.clone(), chats);
+    let response = completion(&backend, chats);
     match response {
         Ok(v) => return v,
         Err(e) => return e,

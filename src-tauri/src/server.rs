@@ -5,7 +5,6 @@ use hyper_tls::HttpsConnector;
 use hyper::Client;
 
 /* SERVER CREATION */
-#[derive(Clone)]
 pub struct Server {
     pub client: Client<HttpsConnector<hyper::client::HttpConnector>>,
     pub uri: String,
