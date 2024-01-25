@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Project discontinued for now, will resume again with a new release having a custom LLM.
+
 CooperAI
 ========
 
