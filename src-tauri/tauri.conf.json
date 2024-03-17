@@ -1,15 +1,15 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build",
-    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "yarn build",
+    "beforeDevCommand": "yarn run dev",
     "devPath": "http://localhost:3000",
     "distDir": "../.output/public"
     
   },
   "package": {
-    "productName": "CooperAI",
-    "version": "0.1.0"
+    "productName": "Cooper",
+    "version": "1.1.5"
   },
   "tauri": {
     "allowlist": {
@@ -38,7 +38,7 @@
         "icons/CooperAI.ico"
       ],
       "identifier": "com.cooperai.dev",
-      "longDescription": "",
+      "longDescription": "Cooper aims compliment mental therapy by leveraging AI capabilities.",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -46,8 +46,10 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
-      "shortDescription": "Virtual AI Assistant for mental therapy",
+      "resources": [
+        ".env"
+      ],
+      "shortDescription": "Virtual AI Therapist",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -63,13 +65,13 @@
     },
     "windows": [
       {
+        "title": "Cooper",
         "fullscreen": false,
-        "height": 600,
         "resizable": false,
-        "title": "CooperAI",
-        "width": 800,
         "transparent": true,
-        "decorations": false
+        "decorations": false,
+        "minimizable": false,
+        "maximizable": false
       }
     ]
   }

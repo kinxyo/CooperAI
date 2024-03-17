@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "cooper-ai",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -13,11 +13,10 @@
     "@nuxt/devtools": "latest",
     "@tauri-apps/cli": "^1.4.0",
     "@types/node": "^18",
-    "nuxt": "^3.6.1",
+    "nuxt": "^3.10.3",
     "nuxt-icon": "^0.4.1"
   },
   "dependencies": {
-    "@nuxtjs/google-fonts": "^3.0.1",
     "@tauri-apps/api": "^1.4.0",
     "@vueuse/nuxt": "^10.2.1"
   }

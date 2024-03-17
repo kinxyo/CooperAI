@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "cooper"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "app"
+description = "Virtual AI Therapist"
+authors = ["@kinxyo"]
+license = "Creative Commons Attribution-NonCommercial 4.0 International License"
+repository = "https://github.com/kinxyo/CooperAI.git"
+default-run = "cooper"
 edition = "2021"
 rust-version = "1.60"
 
@@ -21,7 +21,6 @@ hyper = { version = "^0.14", features = ["full"] }
 hyper-tls = "^0.5"
 tokio = { version = "1", features = ["full"] }
 serde_derive = "^1"
-spinners = "^2"
 
 [features]
 custom-protocol = [ "tauri/custom-protocol" ]
