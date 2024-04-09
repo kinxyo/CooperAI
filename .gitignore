@@ -8,6 +8,12 @@ dist
 # Node dependencies
 node_modules
 
+# Package manager
+yarn.lock
+bun.lockb
+package-lock.json
+pnpm-lock.yaml
+
 # Logs
 logs
 *.log
@@ -23,7 +29,8 @@ logs
 !.env.example
 
 # Notes
-StaticFiles.txt
+TODO.md
+NOTE.md
 
 # Weird File
 ad

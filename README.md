@@ -23,16 +23,45 @@ So, the purpose of this project is to bridge the gap left by traditional therapy
 
 ---
 
-### Current Status 📝
+## Current Status 📝
 
-**Still not production-grade** ❎
+**Still not production-grade** ❌
 
 Initially, it was just a college project that was using GPT model to generate responses, however, I intent to grow the scope by integrating a custom LLM.
 
-##### Future Scope 🌠
+You may check wiki for more details on future plans.
 
-- [ ] **Eliminate dependance of API for AI integration** _(next version)_.
-- [ ] TSL/SSL certification for implementing HTTPS _(next version)_.
-- [ ] Locally provide the remaining assets for offline experience _(next version)_.
-- [ ] Update `Tauri` version to add the ability to drag windows _(next version)_.
-- [ ] Add more themes.
+---
+
+## Build Steps
+
+> [!NOTE]
+> Use package manager of your choice.
+> I'm using bun for demonstration.
+
+### Clone
+
+```bash
+git clone https://github.com/kinxyo/CooperAI.git
+```
+
+### Install modules
+
+```bash
+bun install
+```
+
+### Edit `tauri.conf.json`
+
+```json
+"build": {
+    "beforeBuildCommand": "bun build",
+    "beforeDevCommand": "bun run dev",
+  },
+```
+
+### Run
+
+```bash
+bun run tauri dev
+```
