@@ -1,8 +1,8 @@
 [package]
 name = "cooper"
-version = "0.1.0"
+version = "1.1.5"
 description = "Virtual AI Therapist"
-authors = ["@kinxyo"]
+authors = ["Kinjalk Tripathi <kinjalkt3@gmail.com>"]
 license = "Creative Commons Attribution-NonCommercial 4.0 International License"
 repository = "https://github.com/kinxyo/CooperAI.git"
 default-run = "cooper"

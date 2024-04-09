@@ -153,7 +153,6 @@ async function sendQuery() {
 
 	#user {
 		align-self: flex-end;
-		word-break: break-all;
 		
 		background-color: rgb(95, 168, 211);
 	}
