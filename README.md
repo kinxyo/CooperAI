@@ -23,11 +23,10 @@ So, the purpose of this project is to bridge the gap left by traditional therapy
 
 ---
 
-## Current Status 📝
+## Current Status 
 
-**Still not production-grade** ❌
-
-Initially, it was just a college project that was using GPT model to generate responses, however, I intent to grow the scope by integrating a custom LLM.
+> [!IMPORTANT]
+> **Still in early stages**.
 
 You may check wiki for more details on future plans.
 
