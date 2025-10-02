@@ -1,5 +1,5 @@
 > [!CAUTION]
-> Depriciated packages | Project isn't in working state.
+> dead.
 
 
 <div align="center"><img src="https://github.com/kinxyo/CooperAI/assets/90744941/e74a03da-cac1-4467-be82-0680976ddded" alt="CooperLogo" /> <p>Aims to compliment traditional therapy by leveraging AI.</p> <h1>Cooper</h1>  </div>
